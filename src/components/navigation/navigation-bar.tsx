@@ -9,6 +9,13 @@ import NavigationItem from "~/components/navigation/navigation-item";
 const NavigationBar = () => {
   const pathname = usePathname();
 
+  const navigationItems = [
+    { text: "people", href: "/people" },
+    { text: "places", href: "/places" },
+    { text: "things", href: "/things" },
+    { text: "about me", href: "/about" },
+  ];
+
   return (
     <div className="sticky top-0 z-10 left-0 w-screen h-15 px-4 gap-4 flex items-center justify-between bg-background">
       <div className="">
@@ -22,26 +29,14 @@ const NavigationBar = () => {
         </Link>
       </div>
       <div>
-        <NavigationItem
-          text="recent"
-          href="/recent"
-          isActive={pathname === "/recent"}
-        />
-        <NavigationItem
-          text="travel"
-          href="/travel"
-          isActive={pathname === "/travel"}
-        />
-        <NavigationItem
-          text="lifestyle"
-          href="/lifestyle"
-          isActive={pathname === "/lifestyle"}
-        />
-        <NavigationItem
-          text="about me"
-          href="/about"
-          isActive={pathname === "/about"}
-        />
+        {navigationItems.map((item) => (
+          <NavigationItem
+            key={`navigation-item-${item.text}`}
+            text={item.text}
+            href={item.href}
+            isActive={pathname === item.href}
+          />
+        ))}
       </div>
     </div>
   );
