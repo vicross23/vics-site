@@ -35,6 +35,7 @@ const NavigationBar = () => {
             text={item.text}
             href={item.href}
             isActive={pathname === item.href}
+            colour=""
           />
         ))}
       </div>
