@@ -15,7 +15,10 @@ export default function Footer() {
       <p className={`${mrsSheppards.className} text-3xl`}>Shoot with me!</p>
       <div className="flex flex-row gap-2 items-center">
         <PiPaperPlaneTiltBold size={24} />
-        <Link href="mailto:victoriarossphoto@gmail.com" className="text-lg">
+        <Link
+          href="mailto:victoriarossphoto@gmail.com"
+          className="text-lg hover:underline"
+        >
           victoriarossphoto@gmail.com
         </Link>
       </div>
@@ -23,7 +26,7 @@ export default function Footer() {
         <SiInstagram />
         <Link
           href="https://www.instagram.com/vic.took.this/"
-          className="text-lg"
+          className="text-lg hover:underline"
         >
           @vic.took.this
         </Link>

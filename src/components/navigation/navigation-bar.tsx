@@ -1,10 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { Mrs_Sheppards } from "next/font/google";
+
 import NavigationItem from "~/components/navigation/navigation-item";
+import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
+import { MenuIcon } from "lucide-react";
+
+const mrsSheppards = Mrs_Sheppards({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 const NavigationBar = () => {
   const pathname = usePathname();
@@ -19,26 +27,35 @@ const NavigationBar = () => {
   return (
     <div className="sticky top-0 z-10 left-0 w-screen h-15 px-4 gap-4 flex items-center justify-between bg-background">
       <div className="">
-        <Link href="/">
-          <Image
-            src="/wordmark_dark.svg"
-            alt="Victoria Ross"
-            height={40}
-            width={160}
-          />
+        <Link href="/" className={`${mrsSheppards.className} text-4xl`}>
+          Victoria Ross
         </Link>
       </div>
-      <div>
+      <div className="hidden min-[575px]:flex">
         {navigationItems.map((item) => (
           <NavigationItem
             key={`navigation-item-${item.text}`}
             text={item.text}
             href={item.href}
             isActive={pathname === item.href}
-            colour=""
           />
         ))}
       </div>
+      <Sheet>
+        <SheetTrigger className="block min-[575px]:hidden">
+          <MenuIcon size={24} />
+        </SheetTrigger>
+        <SheetContent side="right" className="pt-10">
+          {navigationItems.map((item) => (
+            <NavigationItem
+              key={`navigation-item-${item.text}`}
+              text={item.text}
+              href={item.href}
+              isActive={pathname === item.href}
+            />
+          ))}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };
