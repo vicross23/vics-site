@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import PasswordEntry from "~/app/admin/components/password-entry";
+import PasswordEntry from "~/components/password-entry";
 
 const AdminPage = async () => {
   const requestCookies = await cookies();
@@ -9,7 +9,11 @@ const AdminPage = async () => {
     return <PasswordEntry />;
   }
 
-  return <div>This is the admin page</div>;
+  return (
+    <div className="grow p-10 flex flex-col justify-center items-center gap-16">
+      This is the admin page
+    </div>
+  );
 };
 
 export default AdminPage;
