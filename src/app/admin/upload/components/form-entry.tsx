@@ -132,7 +132,7 @@ const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
                       <div className="flex flex-col items-center">
                         <span>Drop your image here</span>
                         <span className="text-xs text-muted-foreground">
-                          SVG, PNG, JPG or GIF (max. 16MB)
+                          PNG or JPG (max. 16MB)
                         </span>
                       </div>
                       <Button

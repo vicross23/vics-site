@@ -36,7 +36,7 @@ export default function RootLayout({
             <NavigationBar />
             <div className="grow flex flex-col">{children}</div>
           </main>
-          <Toaster />
+          <Toaster richColors />
           <Footer />
         </QueryProvider>
       </body>

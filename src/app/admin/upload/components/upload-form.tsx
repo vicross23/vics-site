@@ -1,15 +1,21 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { toast } from "sonner";
+import { CirclePlusIcon, Loader2Icon } from "lucide-react";
 
 import { Form } from "~/components/ui/form";
-import FormEntry from "~/app/admin/upload/components/form-entry";
 import { Button } from "~/components/ui/button";
-import { CirclePlusIcon } from "lucide-react";
+import FormEntry from "~/app/admin/upload/components/form-entry";
+
+import { saveImages } from "~/server/db/actions";
 
 const UploadForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const uploadFormSchema = z.object({
     entries: z.array(
       z.object({
@@ -38,10 +44,6 @@ const UploadForm = () => {
     ),
   });
 
-  const submitHandler = (values: z.infer<typeof uploadFormSchema>) => {
-    console.log(values);
-  };
-
   const emptyEntry = {
     title: "",
     location: "",
@@ -62,6 +64,26 @@ const UploadForm = () => {
     control: uploadForm.control,
     name: "entries",
   });
+
+  const submitHandler = async (values: z.infer<typeof uploadFormSchema>) => {
+    setIsSubmitting(true);
+    try {
+      await saveImages(values.entries);
+      window.localStorage.setItem("show_success_toast", "true");
+      window.location.reload();
+    } catch {
+      toast.error("Something went wrong! Values were not saved.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  useEffect(() => {
+    if (window.localStorage.getItem("show_success_toast") === "true") {
+      toast.success("Images saved successfully!");
+      window.localStorage.removeItem("show_success_toast");
+    }
+  }, []);
 
   return (
     <Form {...uploadForm}>
@@ -85,7 +107,9 @@ const UploadForm = () => {
         <Button
           type="submit"
           className="bg-blue-800 hover:bg-blue-900 cursor-pointer"
+          disabled={isSubmitting}
         >
+          {isSubmitting && <Loader2Icon className="animate-spin" />}
           Save & Upload
         </Button>
       </form>
