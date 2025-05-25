@@ -21,19 +21,19 @@ const AdminTabs = () => {
   }
   return (
     <Tabs defaultValue={defaultActiveTab}>
-      <TabsList className="h-auto rounded-none border-b bg-transparent px-5 gap-4">
-        <TabsTrigger variant="underline" value="upload" className="text-lg">
-          <Link href="/admin/upload" className="inline-flex gap-2 items-center">
+      <TabsList className="h-auto rounded-none border-b bg-transparent px-5 gap-4 py-0">
+        <Link href="/admin/upload" className="inline-flex gap-2 items-center">
+          <TabsTrigger variant="underline" value="upload" className="text-lg">
             <FileUpIcon className="size-5" />
             Upload
-          </Link>
-        </TabsTrigger>
-        <TabsTrigger variant="underline" value="manage" className="text-lg">
-          <Link href="/admin/manage" className="inline-flex gap-2 items-center">
+          </TabsTrigger>
+        </Link>
+        <Link href="/admin/manage" className="inline-flex gap-2 items-center">
+          <TabsTrigger variant="underline" value="manage" className="text-lg">
             <FileCog className="size-5" />
             Manage
-          </Link>
-        </TabsTrigger>
+          </TabsTrigger>
+        </Link>
       </TabsList>
     </Tabs>
   );

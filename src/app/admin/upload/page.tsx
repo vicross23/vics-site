@@ -1,5 +1,7 @@
+import UploadForm from "~/app/admin/upload/components/upload-form";
+
 const AdminUploadPage = () => {
-  return <div>This is the upload page</div>;
+  return <UploadForm />;
 };
 
 export default AdminUploadPage;

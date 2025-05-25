@@ -1,0 +1,249 @@
+"use client";
+
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import Image from "next/image";
+import { useFormContext } from "react-hook-form";
+import { useDropzone } from "@uploadthing/react";
+import {
+  generateClientDropzoneAccept,
+  generatePermittedFileTypes,
+} from "uploadthing/client";
+import { toast } from "sonner";
+
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "~/components/ui/form";
+import { Input } from "~/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import { Separator } from "~/components/ui/separator";
+import { FileImageIcon, Loader2Icon, UploadIcon, XIcon } from "lucide-react";
+import { Button } from "~/components/ui/button";
+import { AspectRatio } from "~/components/ui/aspect-ratio";
+
+import { cn, useUploadThing } from "~/lib/utils";
+import { utDeleteFiles } from "~/server/uploadthing/actions";
+
+const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
+  const { control, setValue } = useFormContext();
+  const [selectedImage, setSelectedImage] = useState<File[] | undefined>();
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const onDrop = useCallback((selectedImage: File[]) => {
+    setSelectedImage(selectedImage);
+  }, []);
+
+  const { startUpload, routeConfig, isUploading } = useUploadThing(
+    "imageUploader",
+    {
+      onClientUploadComplete: (result) => {
+        const uploadedImage = result[0];
+
+        setValue(`entries.${entryIndex}.imageUrl`, uploadedImage.ufsUrl, {
+          shouldValidate: true,
+        });
+      },
+      onUploadError: () => {
+        toast.error("Image upload failed!");
+      },
+    }
+  );
+
+  const { getRootProps, getInputProps } = useDropzone({
+    maxFiles: 1,
+    maxSize: 4e6,
+    onDrop,
+    accept: generateClientDropzoneAccept(
+      generatePermittedFileTypes(routeConfig).fileTypes
+    ),
+    multiple: false,
+  });
+
+  const selectOptions = useMemo(() => {
+    const options = [
+      { label: "Home", value: "home" },
+      { label: "People", value: "people" },
+      { label: "Places", value: "places" },
+      { label: "Things", value: "things" },
+    ];
+    return options.map((option) => (
+      <SelectItem
+        key={`entry-${entryIndex}-select-option-${option.value}`}
+        value={option.value}
+      >
+        {option.label}
+      </SelectItem>
+    ));
+  }, []);
+
+  useEffect(() => {
+    if (selectedImage && selectedImage.length > 0) {
+      startUpload(selectedImage);
+    }
+  }, [selectedImage, startUpload]);
+
+  const onImageClear = async (fileUrl: string) => {
+    setIsDeleting(true);
+    await utDeleteFiles([fileUrl]);
+    setValue(`entries.${entryIndex}.imageUrl`, undefined, {
+      shouldValidate: true,
+    });
+    setSelectedImage(undefined);
+    setIsDeleting(false);
+  };
+
+  return (
+    <Fragment>
+      <div className="grid grid-cols-2 gap-4 min-w-2xl">
+        <FormField
+          control={control}
+          name={`entries.${entryIndex}.imageUrl`}
+          render={({ field }) => (
+            <div>
+              <div className="h-full relative">
+                <div
+                  {...getRootProps()}
+                  className={cn(
+                    "w-full h-full flex flex-col rounded-lg border border-dashed items-center text-sm",
+                    !selectedImage && "py-auto"
+                  )}
+                >
+                  {(isUploading || isDeleting) && (
+                    <div className="grow flex flex-col justify-center items-center">
+                      <Loader2Icon className="animate-spin size-10" />
+                      {isUploading && <span>Image is uploading...</span>}
+                      {isDeleting && <span>Image is deleting...</span>}
+                    </div>
+                  )}
+                  {!selectedImage && !isUploading && (
+                    <div className="grow flex flex-col justify-center gap-2">
+                      <Input {...getInputProps()} />
+                      <div className="border border-gray-300 rounded-full p-3 bg-transparent mx-auto">
+                        <FileImageIcon className="size-6 text-gray-600" />
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <span>Drop your image here</span>
+                        <span className="text-xs text-muted-foreground">
+                          SVG, PNG, JPG or GIF (max. 16MB)
+                        </span>
+                      </div>
+                      <Button
+                        variant="outline"
+                        className="cursor-pointer"
+                        type="button"
+                      >
+                        <UploadIcon />
+                        Select Image
+                      </Button>
+                    </div>
+                  )}
+                  {selectedImage && field.value && !isDeleting && (
+                    <AspectRatio ratio={1}>
+                      <Image
+                        alt="uploaded image"
+                        src={field.value}
+                        style={{ objectFit: "cover" }}
+                        fill
+                        className="rounded-lg"
+                      />
+                    </AspectRatio>
+                  )}
+                </div>
+                {selectedImage && (
+                  <div className="absolute top-4 right-4">
+                    <Button
+                      size="icon"
+                      className="cursor-pointer rounded-full size-7"
+                      type="button"
+                      onClick={() => onImageClear(field.value)}
+                    >
+                      <XIcon className="size-4" />
+                    </Button>
+                  </div>
+                )}
+              </div>
+              <FormMessage className="my-2" />
+            </div>
+          )}
+        />
+
+        <div className="flex flex-col gap-4">
+          {/* TITLE */}
+          <FormField
+            control={control}
+            name={`entries.${entryIndex}.title`}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input {...field} placeholder="Title (Optional)" />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          {/* LOCATION */}
+          <FormField
+            control={control}
+            name={`entries.${entryIndex}.location`}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input {...field} placeholder="Location" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* DATE */}
+          <FormField
+            control={control}
+            name={`entries.${entryIndex}.date`}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input {...field} placeholder="Month, Year" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* PAGE */}
+          <FormField
+            control={control}
+            name={`entries.${entryIndex}.page`}
+            render={({ field }) => (
+              <FormItem>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  {...field}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Choose a page..." />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>{selectOptions}</SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+      </div>
+      <Separator />
+    </Fragment>
+  );
+};
+
+export default FormEntry;

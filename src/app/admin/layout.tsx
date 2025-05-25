@@ -17,7 +17,7 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="grow p-10 flex flex-col justify-start items-center gap-16">
+    <div className="grow p-10 flex flex-col justify-start items-center gap-8">
       <AdminTabs />
       {children}
     </div>

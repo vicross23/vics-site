@@ -4,6 +4,7 @@ import "./globals.css";
 import NavigationBar from "~/components/navigation/navigation-bar";
 import Footer from "~/components/footer/footer";
 import QueryProvider from "~/components/providers/query-provider";
+import { Toaster } from "~/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
             <NavigationBar />
             <div className="grow flex flex-col">{children}</div>
           </main>
+          <Toaster />
           <Footer />
         </QueryProvider>
       </body>
