@@ -6,7 +6,12 @@ import { usePathname } from "next/navigation";
 import { Mrs_Sheppards } from "next/font/google";
 
 import NavigationItem from "~/components/navigation/navigation-item";
-import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "~/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
 
 const mrsSheppards = Mrs_Sheppards({
@@ -46,6 +51,7 @@ const NavigationBar = () => {
           <MenuIcon size={24} />
         </SheetTrigger>
         <SheetContent side="right" className="pt-10">
+          <SheetTitle />
           {navigationItems.map((item) => (
             <NavigationItem
               key={`navigation-item-${item.text}`}

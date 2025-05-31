@@ -1,15 +1,18 @@
 "use client";
 
-import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
-import Image from "next/image";
-import { useFormContext } from "react-hook-form";
 import { useDropzone } from "@uploadthing/react";
+import Image from "next/image";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { toast } from "sonner";
 import {
   generateClientDropzoneAccept,
   generatePermittedFileTypes,
 } from "uploadthing/client";
-import { toast } from "sonner";
 
+import { FileImageIcon, Loader2Icon, UploadIcon, XIcon } from "lucide-react";
+import { AspectRatio } from "~/components/ui/aspect-ratio";
+import { Button } from "~/components/ui/button";
 import {
   FormControl,
   FormField,
@@ -25,12 +28,11 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { Separator } from "~/components/ui/separator";
-import { FileImageIcon, Loader2Icon, UploadIcon, XIcon } from "lucide-react";
-import { Button } from "~/components/ui/button";
-import { AspectRatio } from "~/components/ui/aspect-ratio";
 
-import { cn, useUploadThing } from "~/lib/utils";
+import { pageSelectorOptions } from "~/app/admin/constants";
+import { cn } from "~/lib/utils";
 import { utDeleteFiles } from "~/server/uploadthing/actions";
+import { useUploadThing } from "~/app/utils";
 
 const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
   const { control, setValue } = useFormContext();
@@ -68,13 +70,7 @@ const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
   });
 
   const selectOptions = useMemo(() => {
-    const options = [
-      { label: "Home", value: "home" },
-      { label: "People", value: "people" },
-      { label: "Places", value: "places" },
-      { label: "Things", value: "things" },
-    ];
-    return options.map((option) => (
+    return pageSelectorOptions.map((option) => (
       <SelectItem
         key={`entry-${entryIndex}-select-option-${option.value}`}
         value={option.value}

@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { Suspense } from "react";
 import AdminTabs from "~/app/admin/components/tabs";
 
 import PasswordEntry from "~/components/password-entry";
@@ -19,7 +20,7 @@ export default async function AdminLayout({
   return (
     <div className="grow p-10 flex flex-col justify-start items-center gap-8">
       <AdminTabs />
-      {children}
+      <Suspense fallback={<div>Loading images...</div>}>{children}</Suspense>
     </div>
   );
 }

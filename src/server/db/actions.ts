@@ -2,6 +2,7 @@
 
 import prisma from "~/server/db";
 import dayjs from "dayjs";
+import { revalidateTag } from "next/cache";
 
 export const saveImages = async (
   images: {
@@ -18,4 +19,5 @@ export const saveImages = async (
   await prisma.images.createMany({
     data: imagesWithTimestamps,
   });
+  revalidateTag("allImages");
 };
