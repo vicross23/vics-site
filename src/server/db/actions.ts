@@ -2,7 +2,8 @@
 
 import prisma from "~/server/db";
 import dayjs from "dayjs";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
+import { utDeleteFiles } from "~/server/uploadthing/actions";
 
 export const saveImages = async (
   images: {
@@ -19,5 +20,18 @@ export const saveImages = async (
   await prisma.images.createMany({
     data: imagesWithTimestamps,
   });
-  revalidateTag("allImages");
+};
+
+export const deleteImage = async (imageId: string, imageUrl: string) => {
+  try {
+    await utDeleteFiles([imageUrl]);
+    console.log("----- DELETED IMAGE FROM UPLOADTHING -----");
+  } catch {
+    return;
+  }
+
+  await prisma.images.delete({ where: { id: imageId } });
+  console.log("----- DELETED IMAGE FROM MONGO -----");
+
+  revalidatePath("/admin/manage");
 };

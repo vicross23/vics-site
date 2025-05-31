@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { use, useMemo, useState } from "react";
+import EditableImage from "~/app/admin/manage/components/editable-image";
 import PageSelector from "~/app/admin/manage/components/page-selector";
-import { AspectRatio } from "~/components/ui/aspect-ratio";
 
 const ManageImages = ({
   imagesPromise,
@@ -33,17 +32,9 @@ const ManageImages = ({
   return (
     <div className="w-full">
       <PageSelector setSelectedPage={setSelectedPage} />
-      <div className="grid mt-8 gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full">
+      <div className="grid mt-8 gap-4 grid-cols-1 min-[500px]:grid-cols-2 min-[750px]:grid-cols-3 w-full">
         {displayedImages.map((image) => (
-          <AspectRatio ratio={1} key={`manage-image-grid-${image.id}`}>
-            <Image
-              alt="Manage image"
-              src={image.imageUrl}
-              style={{ objectFit: "cover" }}
-              fill
-              className="rounded-sm"
-            />
-          </AspectRatio>
+          <EditableImage key={`manage-image-grid-${image.id}`} image={image} />
         ))}
       </div>
     </div>
