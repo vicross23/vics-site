@@ -21,7 +21,7 @@ const ImageLayout = ({
           className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4"
         >
           <div className="col-span-3 md:col-span-6 lg:col-span-10">
-            <div className="flex justify-start h-[660px]">
+            <div className="flex justify-start h-[330px] md:h-[440px] lg:h-[550px] xl:h-[660px]">
               <Image
                 alt="Manage image"
                 src={image.imageUrl}

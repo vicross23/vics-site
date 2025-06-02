@@ -1,19 +1,33 @@
 import { Mrs_Sheppards } from "next/font/google";
+import Image from "next/image";
+import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { cn } from "~/lib/utils";
+import { getImages } from "~/server/db/queries";
 
 const mrsSheppards = Mrs_Sheppards({
   weight: "400",
   subsets: ["latin"],
 });
 
-export default function About() {
+export default async function About() {
+  const allImages = await getImages();
+
+  const aboutImage = allImages.filter((image) => image.page === "about")[0];
+
   return (
     <div className="grow flex flex-col justify-center items-center gap-16 w-full bg-[#F1FF85] p-10 text-center text-[#0037CF]">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div>
-          <p>Image goes here</p>
+      <div className="grid grid-cols-1 min-[650px]:grid-cols-4 gap-5 mx-auto">
+        <div className="min-[650px]:col-span-2 relative h-full w-full max-w-md mx-auto">
+          <AspectRatio ratio={1}>
+            <Image
+              src={aboutImage.imageUrl}
+              alt="Image of Victoria Ross"
+              fill
+              style={{ objectFit: "cover" }}
+            />
+          </AspectRatio>
         </div>
-        <div className="col-span-2 text-center md:text-left flex flex-col gap-5">
+        <div className="col-span-1 min-[650px]:col-span-2 text-center min-[650px]:text-left flex flex-col gap-5 text-lg md:text-xl">
           <h1 className={cn("text-5xl font-bold", mrsSheppards.className)}>
             Nice to meet you!
           </h1>
