@@ -1,6 +1,8 @@
 "use client";
 
 import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
+import { use } from "react";
 
 import {
   Carousel,
@@ -8,26 +10,39 @@ import {
   CarouselItem,
 } from "~/components/ui/carousel";
 
-const ImageCarousel = () => {
+const ImageCarousel = ({
+  imagesPromise,
+}: {
+  imagesPromise: Promise<
+    {
+      title: string | null;
+      id: string;
+      date: string;
+      location: string;
+      page: string;
+      imageUrl: string;
+      createdAt: string;
+    }[]
+  >;
+}) => {
+  const images = use(imagesPromise);
+
   return (
-    <div className="grow">
+    <div className="w-full grow">
       <Carousel
-        className="w-full"
-        opts={{ loop: true, watchDrag: false }}
+        className="w-auto max-w-screen"
+        opts={{ loop: true, watchDrag: true }}
         plugins={[
           Autoplay({
             delay: 5000,
           }),
         ]}
       >
-        <CarouselContent className=" ">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <CarouselItem
-              key={index}
-              className="flex aspect-square justify-center items-center"
-            >
-              <div className="bg-red-500">
-                <span className="text-4xl font-semibold">{index + 1}</span>
+        <CarouselContent className="justify-start">
+          {images.map((image, index) => (
+            <CarouselItem key={index}>
+              <div className="justify-start h-[600px] w-[1000px]">
+                <Image alt="Image carousel image" src={image.imageUrl} fill />
               </div>
             </CarouselItem>
           ))}

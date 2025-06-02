@@ -12,7 +12,9 @@ const mrsSheppards = Mrs_Sheppards({
 export default function Footer() {
   return (
     <div className="flex flex-col w-full px-6 py-5 gap-4 mb-5 border-t border-gray-300">
-      <p className={`${mrsSheppards.className} text-3xl`}>Shoot with me!</p>
+      <p className={`${mrsSheppards.className} text-3xl tracking-wide`}>
+        Shoot with me!
+      </p>
       <div className="flex flex-row gap-2 items-center">
         <PiPaperPlaneTiltBold size={24} />
         <Link
