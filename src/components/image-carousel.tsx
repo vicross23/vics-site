@@ -25,12 +25,12 @@ const ImageCarousel = ({
     }[]
   >;
 }) => {
-  const images = use(imagesPromise);
+  const images = use(imagesPromise).filter((image) => image.page === "home");
 
   return (
-    <div className="w-full grow">
+    <div className="w-full min-h-screen">
       <Carousel
-        className="w-auto max-w-screen"
+        className="max-w-screen min-h-screen"
         opts={{ loop: true, watchDrag: true }}
         plugins={[
           Autoplay({
@@ -38,7 +38,7 @@ const ImageCarousel = ({
           }),
         ]}
       >
-        <CarouselContent className="justify-start">
+        <CarouselContent className="justify-start min-h-[calc(100vh-60px)]">
           {images.map((image, index) => (
             <CarouselItem key={index}>
               <div className="justify-start h-[600px] w-[1000px]">

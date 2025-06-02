@@ -30,7 +30,7 @@ const NavigationBar = () => {
   ];
 
   return (
-    <div className="sticky top-0 z-10 left-0 w-screen h-15 px-4 gap-4 flex items-center justify-between bg-background">
+    <div className="sticky top-0 z-40 left-0 w-screen h-15 px-4 gap-4 flex items-center justify-between bg-background">
       <div className="">
         <Link
           href="/"

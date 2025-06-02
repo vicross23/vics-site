@@ -61,7 +61,7 @@ const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
 
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
-    maxSize: 4e6,
+    maxSize: 16e6,
     onDrop,
     accept: generateClientDropzoneAccept(
       generatePermittedFileTypes(routeConfig).fileTypes

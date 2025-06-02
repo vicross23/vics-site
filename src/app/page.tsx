@@ -10,12 +10,12 @@ const mrsSheppards = Mrs_Sheppards({
 export default async function Home() {
   const allImagesPromise = getImages();
   return (
-    <div className="grow flex flex-col items-center justify-items-center gap-16 min-h-full">
-      <div className="mt-18 md-mt-36 grid [grid-template-areas:'stack']">
-        <div className="[grid-area:stack]">
+    <div className="grow">
+      <div className="grid [grid-template-areas:'stack']">
+        <div className="[grid-area:stack] h-full max-h-[calc(100vh-60px)]">
           <ImageCarousel imagesPromise={allImagesPromise} />
         </div>
-        <div className="z-10 [grid-area:stack] bg-slate-800/30">
+        <div className="z-10 [grid-area:stack] bg-slate-800/30 max-h-[calc(100vh-60px)]">
           <div className="h-full flex flex-col justify-center items-center text-background tracking-wide">
             <h1 className={`${mrsSheppards.className} text-8xl text-center`}>
               Victoria Ross
