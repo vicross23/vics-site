@@ -89,7 +89,7 @@ const UploadForm = () => {
     <Form {...uploadForm}>
       <form
         onSubmit={uploadForm.handleSubmit(submitHandler)}
-        className="flex flex-col gap-8"
+        className="flex flex-col gap-8 w-full"
       >
         {fields.map((field, index) => (
           <FormEntry key={field.id} entryIndex={index} />

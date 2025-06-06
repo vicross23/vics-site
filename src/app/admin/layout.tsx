@@ -14,13 +14,19 @@ export default async function AdminLayout({
   const isAuthenticated = requestCookies.get(process.env.PASSWORD_COOKIE_NAME!);
 
   if (!isAuthenticated) {
-    return <PasswordEntry />;
+    return (
+      <div className="grow flex flex-col">
+        <PasswordEntry />
+      </div>
+    );
   }
 
   return (
-    <div className="grow p-10 flex flex-col justify-start items-center gap-8">
-      <AdminTabs />
-      <Suspense fallback={<div>Loading images...</div>}>{children}</Suspense>
+    <div className="grow flex flex-col">
+      <div className="min-h-full min-w-full grow p-10 flex flex-col justify-start items-center gap-8">
+        <AdminTabs />
+        <Suspense fallback={<div>Loading images...</div>}>{children}</Suspense>
+      </div>
     </div>
   );
 }

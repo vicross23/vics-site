@@ -98,22 +98,22 @@ const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
 
   return (
     <Fragment>
-      <div className="grid grid-cols-2 gap-4 min-w-2xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:min-w-2xl">
         <FormField
           control={control}
           name={`entries.${entryIndex}.imageUrl`}
           render={({ field }) => (
             <div>
-              <div className="h-full relative">
+              <div className="h-full flex flex-col">
                 <div
                   {...getRootProps()}
                   className={cn(
                     "w-full h-full flex flex-col rounded-lg border border-dashed items-center text-sm",
-                    !selectedImage && "py-auto"
+                    !selectedImage && "py-4"
                   )}
                 >
                   {(isUploading || isDeleting) && (
-                    <div className="grow flex flex-col justify-center items-center">
+                    <div className="grow flex flex-col justify-center items-center py-4">
                       <Loader2Icon className="animate-spin size-10" />
                       {isUploading && <span>Image is uploading...</span>}
                       {isDeleting && <span>Image is deleting...</span>}
@@ -153,6 +153,7 @@ const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
                     </AspectRatio>
                   )}
                 </div>
+                <FormMessage className="inline md:hidden my-2" />
                 {selectedImage && (
                   <div className="absolute top-4 right-4">
                     <Button
@@ -166,7 +167,7 @@ const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
                   </div>
                 )}
               </div>
-              <FormMessage className="my-2" />
+              <FormMessage className="hidden md:inline my-2" />
             </div>
           )}
         />
