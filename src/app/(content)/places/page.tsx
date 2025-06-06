@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import ImageLayout from "~/app/(content)/components/image-layout";
+import ImageLayoutLoading from "~/app/(content)/components/image-layout-loading";
 import { getImages } from "~/server/db/queries";
 
 export default async function Places() {
@@ -9,6 +10,7 @@ export default async function Places() {
 
   return (
     <div className="grow p-10 flex flex-col gap-8">
+      <ImageLayoutLoading />
       <Suspense fallback={<div>loading images...</div>}>
         <ImageLayout images={filteredImages} />
       </Suspense>
