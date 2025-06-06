@@ -26,6 +26,7 @@ const NavigationBar = () => {
     { text: "people", href: "/people" },
     { text: "places", href: "/places" },
     { text: "things", href: "/things" },
+    { text: "cv", href: "/cv" },
     { text: "about me", href: "/about" },
   ];
 
@@ -39,7 +40,7 @@ const NavigationBar = () => {
           Victoria Ross
         </Link>
       </div>
-      <div className="hidden min-[575px]:flex">
+      <div className="hidden min-[610px]:flex">
         {navigationItems.map((item) => (
           <NavigationItem
             key={`navigation-item-${item.text}`}
@@ -50,7 +51,7 @@ const NavigationBar = () => {
         ))}
       </div>
       <Sheet>
-        <SheetTrigger className="block min-[575px]:hidden">
+        <SheetTrigger className="block min-[610px]:hidden">
           <MenuIcon size={24} />
         </SheetTrigger>
         <SheetContent side="right" className="pt-10">
