@@ -98,7 +98,7 @@ const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
 
   return (
     <Fragment>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full md:min-w-2xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
         <FormField
           control={control}
           name={`entries.${entryIndex}.imageUrl`}
