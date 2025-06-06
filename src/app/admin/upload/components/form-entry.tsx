@@ -108,7 +108,7 @@ const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
           name={`entries.${entryIndex}.imageUrl`}
           render={({ field }) => (
             <div>
-              <div className="h-full flex flex-col">
+              <div className="h-full flex flex-col relative">
                 <div
                   {...getRootProps()}
                   className={cn(
@@ -158,7 +158,7 @@ const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
                   )}
                 </div>
                 <FormMessage className="inline md:hidden my-2" />
-                {selectedImage && (
+                {selectedImage && !(isUploading || isDeleting) && (
                   <div className="absolute top-4 right-4">
                     <Button
                       size="icon"
