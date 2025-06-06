@@ -40,8 +40,8 @@ const ImageCarousel = ({
       >
         <CarouselContent className="justify-start min-h-[calc(100vh-60px)]">
           {images.map((image, index) => (
-            <CarouselItem key={index}>
-              <div className="justify-start h-[600px] w-[1000px]">
+            <CarouselItem key={index} className="min-w-full min-h-full">
+              <div className="min-h-full relative">
                 <Image alt="Image carousel image" src={image.imageUrl} fill />
               </div>
             </CarouselItem>

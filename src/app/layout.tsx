@@ -34,7 +34,7 @@ export default function RootLayout({
         <QueryProvider>
           <main className="flex flex-col min-h-screen w-full">
             <NavigationBar />
-            <div className="grow flex flex-col">{children}</div>
+            <div>{children}</div>
           </main>
           <Toaster richColors />
           <Footer />
