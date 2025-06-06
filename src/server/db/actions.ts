@@ -12,6 +12,7 @@ export const saveImages = async (
     date: string;
     page: string;
     imageUrl: string;
+    isSmall?: boolean;
   }[]
 ) => {
   const createdAt = dayjs().toISOString();

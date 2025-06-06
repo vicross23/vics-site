@@ -3,7 +3,7 @@
 import { useDropzone } from "@uploadthing/react";
 import Image from "next/image";
 import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import {
   generateClientDropzoneAccept,
@@ -17,6 +17,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
@@ -30,9 +31,10 @@ import {
 import { Separator } from "~/components/ui/separator";
 
 import { pageSelectorOptions } from "~/app/admin/constants";
+import { useUploadThing } from "~/app/utils";
+import { Checkbox } from "~/components/ui/checkbox";
 import { cn } from "~/lib/utils";
 import { utDeleteFiles } from "~/server/uploadthing/actions";
-import { useUploadThing } from "~/app/utils";
 
 const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
   const { control, setValue } = useFormContext();
@@ -79,6 +81,8 @@ const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
       </SelectItem>
     ));
   }, []);
+
+  const pageValue = useWatch({ name: `entries.${entryIndex}.page` });
 
   useEffect(() => {
     if (selectedImage && selectedImage.length > 0) {
@@ -236,6 +240,28 @@ const FormEntry = ({ entryIndex }: { entryIndex: number }) => {
               </FormItem>
             )}
           />
+
+          {/* ISSMALL CHECKBOX */}
+          {pageValue === "home" && (
+            <FormField
+              control={control}
+              name={`entries.${entryIndex}.isSmall`}
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center gap-2 !cursor-pointer">
+                  <FormControl>
+                    <Checkbox
+                      className="cursor-pointer"
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel className="cursor-pointer">
+                    Is image for small screens?
+                  </FormLabel>
+                </FormItem>
+              )}
+            />
+          )}
         </div>
       </div>
       <Separator />

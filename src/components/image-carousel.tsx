@@ -3,6 +3,8 @@
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { use } from "react";
+import useBreakpoint from "use-breakpoint";
+import { CAROUSEL_BREAKPOINTS } from "~/components/constants";
 
 import {
   Carousel,
@@ -16,6 +18,7 @@ const ImageCarousel = ({
   imagesPromise: Promise<
     {
       title: string | null;
+      isSmall: boolean | null;
       id: string;
       date: string;
       location: string;
@@ -25,7 +28,13 @@ const ImageCarousel = ({
     }[]
   >;
 }) => {
-  const images = use(imagesPromise).filter((image) => image.page === "home");
+  const { breakpoint } = useBreakpoint(CAROUSEL_BREAKPOINTS, "large");
+
+  const isSmall = breakpoint === "small";
+
+  const images = use(imagesPromise).filter(
+    (image) => image.page === "home" && isSmall === image.isSmall
+  );
 
   return (
     <div className="w-full min-h-screen">

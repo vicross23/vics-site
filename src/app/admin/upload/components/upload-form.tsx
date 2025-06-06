@@ -40,6 +40,7 @@ const UploadForm = () => {
           .refine((value) => value !== "", {
             message: "Must supply an image",
           }),
+        isSmall: z.boolean().optional(),
       })
     ),
   });
@@ -50,6 +51,7 @@ const UploadForm = () => {
     date: "",
     page: "",
     imageUrl: "",
+    isSmall: false,
   };
 
   const uploadForm = useForm<z.infer<typeof uploadFormSchema>>({
