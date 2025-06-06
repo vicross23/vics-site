@@ -10,8 +10,7 @@ export default async function Places() {
 
   return (
     <div className="grow p-10 flex flex-col gap-8">
-      <ImageLayoutLoading />
-      <Suspense fallback={<div>loading images...</div>}>
+      <Suspense fallback={<ImageLayoutLoading />}>
         <ImageLayout images={filteredImages} />
       </Suspense>
     </div>
