@@ -19,10 +19,14 @@ export default async function Home() {
         </div>
         <div className="z-10 [grid-area:stack] bg-slate-800/30 max-h-[calc(100vh-60px)]">
           <div className="h-full flex flex-col justify-center items-center text-background tracking-wide">
-            <h1 className={`${mrsSheppards.className} text-8xl text-center`}>
+            <h1
+              className={`${mrsSheppards.className} text-7xl min-[475px]:text-8xl text-center`}
+            >
               Victoria Ross
             </h1>
-            <p className="text-xl">{"documentary & lifestyle photography"}</p>
+            <p className="text-xl text-center">
+              {"documentary & lifestyle photography"}
+            </p>
           </div>
         </div>
       </div>
