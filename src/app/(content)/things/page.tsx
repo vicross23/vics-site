@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Suspense } from "react";
 import ImageLayout from "~/app/(content)/components/image-layout";
 import ImageLayoutLoading from "~/app/(content)/components/image-layout-loading";
