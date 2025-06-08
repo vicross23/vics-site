@@ -12,7 +12,10 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Victoria Ross",
+  title: {
+    template: "%s | Victoria Ross",
+    default: "Victoria Ross",
+  },
   description: "A curation of me",
 };
 

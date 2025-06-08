@@ -1,3 +1,9 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "CV",
+};
+
 export default function CV() {
   return (
     <div className="grow p-10 flex flex-col gap-4">

@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { Mrs_Sheppards } from "next/font/google";
 import Image from "next/image";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
@@ -8,6 +9,10 @@ const mrsSheppards = Mrs_Sheppards({
   weight: "400",
   subsets: ["latin"],
 });
+
+export const metadata: Metadata = {
+  title: "About",
+};
 
 export default async function About() {
   const allImages = await getImages();

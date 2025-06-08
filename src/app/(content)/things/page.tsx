@@ -1,8 +1,13 @@
 export const dynamic = "force-dynamic";
+import { Metadata } from "next";
 import { Suspense } from "react";
 import ImageLayout from "~/app/(content)/components/image-layout";
 import ImageLayoutLoading from "~/app/(content)/components/image-layout-loading";
 import { getImages } from "~/server/db/queries";
+
+export const metadata: Metadata = {
+  title: "Things",
+};
 
 export default async function Things() {
   const allImages = await getImages();
