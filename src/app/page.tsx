@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Mrs_Sheppards } from "next/font/google";
 import ImageCarousel from "~/components/image-carousel";
 import { getImages } from "~/server/db/queries";
