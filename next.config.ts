@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       new URL("https://aufrb49ors.ufs.sh/f/**"),
       new URL("https://kdib81rtmm.ufs.sh/f/**"),
     ],
+    minimumCacheTTL: 432000
   },
 };
 

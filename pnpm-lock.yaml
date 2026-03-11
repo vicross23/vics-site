@@ -57,7 +57,7 @@ importers:
         specifier: ^5.76.1
         version: 5.90.21(react@19.2.4)
       '@uploadthing/react':
-        specifier: ^7.3.1
+        specifier: ^7.3.3
         version: 7.3.3(next@15.3.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(react@19.2.4)(uploadthing@7.7.4(next@15.3.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(tailwindcss@4.2.1))
       axios:
         specifier: ^1.9.0
@@ -123,7 +123,7 @@ importers:
         specifier: ^3.2.0
         version: 3.5.0
       uploadthing:
-        specifier: ^7.7.2
+        specifier: ^7.7.4
         version: 7.7.4(next@15.3.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(tailwindcss@4.2.1)
       use-breakpoint:
         specifier: ^4.0.6
