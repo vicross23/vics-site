@@ -13,25 +13,23 @@ type RandomImagePickerProps = {
 const HEADER_HEIGHT = "3.75rem";
 const IMAGE_HEIGHT = `calc((100svh - ${HEADER_HEIGHT}) * 0.8)`;
 
-function getRandomImage(images: Media[], currentId?: string) {
-  if (images.length === 0) {
-    return null;
+function shuffleImages(images: Media[]) {
+  const shuffled = [...images];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
   }
 
-  if (images.length === 1) {
-    return images[0];
-  }
-
-  const candidates = currentId
-    ? images.filter((image) => image.id !== currentId)
-    : images;
-
-  return candidates[Math.floor(Math.random() * candidates.length)] ?? images[0];
+  return shuffled;
 }
 
 export default function RandomImagePicker({ images }: RandomImagePickerProps) {
+  const shuffledImages = useMemo(() => shuffleImages(images), [images]);
   const [selectedImage, setSelectedImage] = useState<Media | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const [incomingImage, setIncomingImage] = useState<Media | null>(null);
+  const [incomingIndex, setIncomingIndex] = useState<number | null>(null);
   const [imageLoading, setImageLoading] = useState(false);
 
   const buttonText = selectedImage ? "show me another" : "show me something";
@@ -95,7 +93,9 @@ export default function RandomImagePicker({ images }: RandomImagePickerProps) {
               priority
               onLoad={() => {
                 setSelectedImage(incomingImage);
+                setSelectedIndex(incomingIndex ?? selectedIndex);
                 setIncomingImage(null);
+                setIncomingIndex(null);
                 setImageLoading(false);
               }}
             />
@@ -106,8 +106,13 @@ export default function RandomImagePicker({ images }: RandomImagePickerProps) {
       <Button
         type="button"
         onClick={() => {
-          const currentImageId = incomingImage?.id ?? selectedImage?.id;
-          const nextImage = getRandomImage(images, currentImageId);
+          if (shuffledImages.length === 0) {
+            return;
+          }
+
+          const baseIndex = incomingIndex ?? selectedIndex;
+          const nextIndex = (baseIndex + 1) % shuffledImages.length;
+          const nextImage = shuffledImages[nextIndex];
 
           if (!nextImage) {
             return;
@@ -117,10 +122,12 @@ export default function RandomImagePicker({ images }: RandomImagePickerProps) {
 
           if (!selectedImage) {
             setSelectedImage(nextImage);
+            setSelectedIndex(nextIndex);
             return;
           }
 
           setIncomingImage(nextImage);
+          setIncomingIndex(nextIndex);
         }}
         className="transition-colors hover:bg-blue-600! hover:text-white cursor-pointer rounded-none active:scale-98"
         disabled={!hasImages || imageLoading}
