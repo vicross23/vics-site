@@ -23,9 +23,9 @@ const NavigationBar = () => {
   const pathname = usePathname();
 
   const navigationItems = [
-    { text: "people", href: "/people" },
-    { text: "places", href: "/places" },
-    { text: "things", href: "/things" },
+    { text: "projects", href: "/projects" },
+    { text: "personal", href: "/personal" },
+    { text: "random", href: "/random" },
     { text: "cv", href: "/cv" },
     { text: "about me", href: "/about" },
   ];

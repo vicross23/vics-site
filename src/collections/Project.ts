@@ -1,4 +1,5 @@
 import { CollectionConfig } from "payload";
+import { ProjectPageType } from "~/app/models";
 
 export const Project: CollectionConfig = {
   slug: "projects",
@@ -12,6 +13,8 @@ export const Project: CollectionConfig = {
         }
       }, required: true
     },
-    { name: "images", type: "relationship", relationTo: "media", hasMany: true }
+    { name: "page", type: "select", options: [{ label: "Projects", value: ProjectPageType.Projects }, { label: "Personal", value: ProjectPageType.Personal }], required: true },
+    { name: "images", type: "relationship", relationTo: "media", hasMany: true },
+    { name: "coverImage", type: "relationship", relationTo: "media", required: true },
   ]
 }

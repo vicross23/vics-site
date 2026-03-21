@@ -84,7 +84,6 @@ export default async function About() {
       },
     },
   });
-  console.log("🚀 ~ About ~ content:", content);
 
   return (
     <div className="grow flex flex-col justify-center items-center gap-16 w-full p-10 text-center mx-auto">

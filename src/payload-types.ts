@@ -186,7 +186,9 @@ export interface Project {
   id: string;
   name: string;
   date: string;
+  page: 'projects' | 'personal';
   images?: (string | Media)[] | null;
+  coverImage: string | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -387,7 +389,9 @@ export interface MediaSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   name?: T;
   date?: T;
+  page?: T;
   images?: T;
+  coverImage?: T;
   updatedAt?: T;
   createdAt?: T;
 }

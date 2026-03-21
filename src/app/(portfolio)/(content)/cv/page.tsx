@@ -44,9 +44,9 @@ export default async function CV() {
               if (experienceType.name === "Group Exhibitions") {
                 return (
                   <div key={`experience-${experience.id}`}>
-                    <p>{`${format(experience?.startDate, "yyyy")} // (${
+                    <p>{`${format(experience?.startDate, "yyyy")} // ${
                       experience?.name
-                    })`}</p>
+                    }`}</p>
                     <p>{experience?.venue}</p>
                     <p>{experience?.geographicLocation}</p>
                   </div>
