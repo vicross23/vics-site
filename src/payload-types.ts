@@ -69,7 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    collections: Collection;
+    projects: Project;
     experience: Experience;
     'experience-type': ExperienceType;
     content: Content;
@@ -86,7 +86,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    collections: CollectionsSelect<false> | CollectionsSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     experience: ExperienceSelect<false> | ExperienceSelect<true>;
     'experience-type': ExperienceTypeSelect<false> | ExperienceTypeSelect<true>;
     content: ContentSelect<false> | ContentSelect<true>;
@@ -164,7 +164,7 @@ export interface Media {
   isSmall?: boolean | null;
   location?: string | null;
   date?: string | null;
-  collection?: (string | null) | Collection;
+  project?: (string | null) | Project;
   _key?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -180,9 +180,9 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "collections".
+ * via the `definition` "projects".
  */
-export interface Collection {
+export interface Project {
   id: string;
   name: string;
   date: string;
@@ -278,8 +278,8 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'collections';
-        value: string | Collection;
+        relationTo: 'projects';
+        value: string | Project;
       } | null)
     | ({
         relationTo: 'experience';
@@ -366,7 +366,7 @@ export interface MediaSelect<T extends boolean = true> {
   isSmall?: T;
   location?: T;
   date?: T;
-  collection?: T;
+  project?: T;
   _key?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -382,9 +382,9 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "collections_select".
+ * via the `definition` "projects_select".
  */
-export interface CollectionsSelect<T extends boolean = true> {
+export interface ProjectsSelect<T extends boolean = true> {
   name?: T;
   date?: T;
   images?: T;

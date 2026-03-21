@@ -11,7 +11,7 @@ import { Users } from './collections/Users'
 import { ExperienceType } from '~/collections/ExperienceType'
 import { Experience } from '~/collections/Experience'
 import { Content } from '~/collections/Content'
-import { Collection } from '~/collections/Collection'
+import { Project } from '~/collections/Project'
 
 
 const filename = fileURLToPath(import.meta.url)
@@ -25,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Collection, Experience, ExperienceType, Content],
+  collections: [Users, Media, Project, Experience, ExperienceType, Content],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

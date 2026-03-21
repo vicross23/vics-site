@@ -30,9 +30,9 @@ export const Media: CollectionConfig = {
       },
     },
     {
-      name: "collection",
+      name: "project",
       type: "relationship",
-      relationTo: "collections",
+      relationTo: "projects",
     },
   ],
   admin: {
