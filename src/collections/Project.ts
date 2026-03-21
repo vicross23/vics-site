@@ -13,6 +13,7 @@ export const Project: CollectionConfig = {
         }
       }, required: true
     },
+    { name: "description", type: "textarea" },
     { name: "page", type: "select", options: [{ label: "Projects", value: ProjectPageType.Projects }, { label: "Personal", value: ProjectPageType.Personal }], required: true },
     { name: "images", type: "relationship", relationTo: "media", hasMany: true },
     { name: "coverImage", type: "relationship", relationTo: "media", required: true },
