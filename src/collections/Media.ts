@@ -1,9 +1,17 @@
 import type { CollectionConfig } from "payload";
+import {
+  removeMediaFromProjects,
+  syncMediaProjectsToProject,
+} from "~/lib/project-media-sync";
 
 export const Media: CollectionConfig = {
   slug: "media",
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [syncMediaProjectsToProject],
+    afterDelete: [removeMediaFromProjects],
   },
   fields: [
     {
@@ -30,9 +38,10 @@ export const Media: CollectionConfig = {
       },
     },
     {
-      name: "project",
+      name: "projects",
       type: "relationship",
       relationTo: "projects",
+      hasMany: true,
     },
   ],
   admin: {

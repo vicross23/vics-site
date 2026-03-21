@@ -164,7 +164,7 @@ export interface Media {
   isSmall?: boolean | null;
   location?: string | null;
   date?: string | null;
-  project?: (string | null) | Project;
+  projects?: (string | Project)[] | null;
   _key?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -369,7 +369,7 @@ export interface MediaSelect<T extends boolean = true> {
   isSmall?: T;
   location?: T;
   date?: T;
-  project?: T;
+  projects?: T;
   _key?: T;
   updatedAt?: T;
   createdAt?: T;

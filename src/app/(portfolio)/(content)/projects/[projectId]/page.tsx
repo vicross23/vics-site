@@ -30,26 +30,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     );
   }
 
-  const imageIds = project.images ?? [];
-
-  let images: Media[] = [];
-
-  if (imageIds.length > 0) {
-    const media = await payload.find({
-      collection: "media",
-      depth: 0,
-      limit: imageIds.length,
-      pagination: false,
-      sort: "-createdAt",
-      where: {
-        id: {
-          in: imageIds,
-        },
-      },
-    });
-
-    images = media.docs.filter((image) => Boolean(image.url));
-  }
+  const images =
+    project.images?.filter(
+      (image): image is Media =>
+        typeof image === "object" && image !== null && Boolean(image.url)
+    ) ?? [];
 
   return (
     <div className="flex w-full flex-1 flex-col items-center justify-start gap-8 mb-20 px-2 md:px-0 max-w-4xl mx-auto text-center">

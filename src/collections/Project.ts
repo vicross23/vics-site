@@ -1,9 +1,17 @@
 import { CollectionConfig } from "payload";
 import { ProjectPageType } from "~/app/models";
+import {
+  removeProjectFromMedia,
+  syncProjectImagesToMedia,
+} from "~/lib/project-media-sync";
 
 export const Project: CollectionConfig = {
   slug: "projects",
   admin: { useAsTitle: "name" },
+  hooks: {
+    afterChange: [syncProjectImagesToMedia],
+    afterDelete: [removeProjectFromMedia],
+  },
   fields: [
     { name: "name", type: "text", required: true },
     {
