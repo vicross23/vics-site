@@ -52,7 +52,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <div className="flex w-full flex-1 flex-col items-center justify-start gap-8 py-6 mb-20 max-w-4xl mx-auto text-center">
+    <div className="flex w-full flex-1 flex-col items-center justify-start gap-8 mb-20 px-2 md:px-0 max-w-4xl mx-auto text-center">
       <h1 className="text-2xl">
         {project.name}
         {" // " + format(parseISO(project.date), "yyyy")}

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ProjectMasonryLightbox from "~/components/projects/project-masonry-lightbox";
 import { Media } from "~/payload-types";
 
 type ProjectMasonryGalleryProps = {
@@ -21,13 +21,7 @@ export default function ProjectMasonryGallery({
           key={image.id}
           className="mb-4 break-inside-avoid overflow-hidden"
         >
-          <Image
-            src={image.url!}
-            alt={image.title || `${projectName} image`}
-            width={image.width ?? 1600}
-            height={image.height ?? 1200}
-            className="h-auto w-full"
-          />
+          <ProjectMasonryLightbox image={image} projectName={projectName} />
         </figure>
       ))}
     </div>

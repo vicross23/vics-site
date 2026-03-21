@@ -46,7 +46,7 @@ const NavigationBar = () => {
             key={`navigation-item-${item.text}`}
             text={item.text}
             href={item.href}
-            isActive={pathname === item.href}
+            isActive={!!pathname.includes(item.href)}
           />
         ))}
       </div>
@@ -61,7 +61,7 @@ const NavigationBar = () => {
               key={`navigation-item-${item.text}`}
               text={item.text}
               href={item.href}
-              isActive={pathname === item.href}
+              isActive={!!pathname.includes(item.href)}
             />
           ))}
         </SheetContent>
