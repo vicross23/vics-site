@@ -7,8 +7,6 @@ export const metadata: Metadata = {
   title: "About",
 };
 
-export const dynamic = "force-dynamic";
-
 export default async function About() {
   const payload = await getPayload();
 
