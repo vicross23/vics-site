@@ -33,13 +33,13 @@ const ImageCarousel = ({
   const isSmall = breakpoint === "small";
 
   const images = use(imagesPromise).filter(
-    (image) => image.page === "home" && isSmall === image.isSmall
+    (image) => image.page === "home" && isSmall === image.isSmall,
   );
 
   return (
-    <div className="w-full min-h-screen">
+    <div className="w-full min-h-[calc(100vh-60px)] bg-background p-3 md:p-6">
       <Carousel
-        className="max-w-screen min-h-screen"
+        className="max-w-screen min-h-[calc(100vh-84px)] md:min-h-[calc(100vh-108px)]"
         opts={{ loop: true, watchDrag: true }}
         plugins={[
           Autoplay({
@@ -47,17 +47,20 @@ const ImageCarousel = ({
           }),
         ]}
       >
-        <CarouselContent className="justify-start min-h-[calc(100vh-60px)]">
+        <CarouselContent className="ml-0 justify-start min-h-[calc(100vh-84px)] md:min-h-[calc(100vh-108px)]">
           {images.map((image, index) => (
-            <CarouselItem key={index} className="min-w-full min-h-full">
-              <div className="min-h-full relative">
+            <CarouselItem
+              key={index}
+              className="min-w-full min-h-[calc(100vh-84px)] pl-0 md:min-h-[calc(100vh-108px)]"
+            >
+              <div className="relative min-h-[calc(100vh-84px)] overflow-hidden md:min-h-[calc(100vh-108px)]">
                 <Image
                   alt="Image carousel image"
                   src={image.imageUrl}
                   fill
                   sizes="100vw"
                   className="object-cover"
-                  unoptimized
+                  // unoptimized
                 />
               </div>
             </CarouselItem>

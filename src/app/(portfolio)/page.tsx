@@ -24,8 +24,8 @@ export default async function Home() {
         <div className="[grid-area:stack] h-full max-h-[calc(100vh-60px)]">
           <ImageCarousel imagesPromise={allImagesPromise} />
         </div>
-        <div className="z-10 [grid-area:stack] bg-slate-800/30 max-h-[calc(100vh-60px)]">
-          <div className="h-full flex flex-col justify-center items-center text-background tracking-wide">
+        <div className="z-10 [grid-area:stack] max-h-[calc(100vh-60px)] p-3 md:p-6">
+          <div className="h-full bg-slate-800/30 flex flex-col justify-center items-center text-background tracking-wide">
             <RichText
               data={content?.docs[0]?.content}
               converters={converters}
