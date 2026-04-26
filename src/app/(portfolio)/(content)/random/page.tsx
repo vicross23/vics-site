@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
+import { Suspense } from "react";
 import RandomImagePicker from "~/components/random/random-image-picker";
+import { Skeleton } from "~/components/ui/skeleton";
 import { getPayload } from "~/lib/payload";
 import { Media } from "~/payload-types";
 
@@ -27,5 +29,9 @@ export default async function RandomPage() {
 
   const images = media.docs.filter(isImageMedia);
 
-  return <RandomImagePicker images={images} />;
+  return (
+    <Suspense fallback={<Skeleton className="w-full h-full" />}>
+      <RandomImagePicker images={images} />
+    </Suspense>
+  );
 }
