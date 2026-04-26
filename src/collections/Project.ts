@@ -8,6 +8,12 @@ import {
 export const Project: CollectionConfig = {
   slug: "projects",
   admin: { useAsTitle: "name" },
+  access: {
+    read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
+  },
   hooks: {
     afterChange: [syncProjectImagesToMedia],
     afterDelete: [removeProjectFromMedia],
