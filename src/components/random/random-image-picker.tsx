@@ -18,7 +18,10 @@ function shuffleImages(images: Media[]) {
 
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
     const swapIndex = Math.floor(Math.random() * (index + 1));
-    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+    [shuffled[index], shuffled[swapIndex]] = [
+      shuffled[swapIndex],
+      shuffled[index],
+    ];
   }
 
   return shuffled;
@@ -75,7 +78,6 @@ export default function RandomImagePicker({ images }: RandomImagePickerProps) {
               className={`h-full w-auto max-w-full object-contain transition-opacity ${
                 imageLoading && !incomingImage ? "opacity-0" : "opacity-100"
               }`}
-              unoptimized
               onLoad={() => {
                 if (!incomingImage) {
                   setImageLoading(false);
@@ -92,7 +94,6 @@ export default function RandomImagePicker({ images }: RandomImagePickerProps) {
               height={incomingImage.height ?? 1200}
               sizes="100vw"
               className="absolute inset-0 m-auto h-full w-auto max-w-full object-contain opacity-0 pointer-events-none"
-              unoptimized
               onLoad={() => {
                 setSelectedImage(incomingImage);
                 setSelectedIndex(incomingIndex ?? selectedIndex);

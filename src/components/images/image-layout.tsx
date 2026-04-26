@@ -32,14 +32,14 @@ const ImageLayout = ({
                 sizes="(min-width: 1280px) 83vw, (min-width: 768px) 75vw, 100vw"
                 layout="responsive"
                 className="max-w-fit"
-                unoptimized
               />
             </div>
           </div>
           <div
             className={cn(
               "flex flex-col justify-end col-span-2",
-              index !== images.length - 1 && "border-b pb-4 md:border-0 md:pb-0"
+              index !== images.length - 1 &&
+                "border-b pb-4 md:border-0 md:pb-0",
             )}
           >
             {image?.title && <p>{image.title}</p>}

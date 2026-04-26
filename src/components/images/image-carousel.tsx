@@ -60,7 +60,6 @@ const ImageCarousel = ({
                   fill
                   sizes="100vw"
                   className="object-cover"
-                  // unoptimized
                 />
               </div>
             </CarouselItem>

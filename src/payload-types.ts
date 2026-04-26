@@ -165,8 +165,6 @@ export interface Media {
   location?: string | null;
   date?: string | null;
   projects?: (string | Project)[] | null;
-  _key?: string | null;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -371,8 +369,6 @@ export interface MediaSelect<T extends boolean = true> {
   location?: T;
   date?: T;
   projects?: T;
-  _key?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
