@@ -29,9 +29,10 @@ const ImageLayout = ({
                 style={{ objectFit: "contain" }}
                 width={50}
                 height={50}
-                priority
+                sizes="(min-width: 1280px) 83vw, (min-width: 768px) 75vw, 100vw"
                 layout="responsive"
                 className="max-w-fit"
+                unoptimized
               />
             </div>
           </div>

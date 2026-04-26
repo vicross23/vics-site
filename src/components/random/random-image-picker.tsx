@@ -71,10 +71,11 @@ export default function RandomImagePicker({ images }: RandomImagePickerProps) {
               alt={imageAlt}
               width={selectedImage.width ?? 1600}
               height={selectedImage.height ?? 1200}
+              sizes="100vw"
               className={`h-full w-auto max-w-full object-contain transition-opacity ${
                 imageLoading && !incomingImage ? "opacity-0" : "opacity-100"
               }`}
-              priority
+              unoptimized
               onLoad={() => {
                 if (!incomingImage) {
                   setImageLoading(false);
@@ -89,8 +90,9 @@ export default function RandomImagePicker({ images }: RandomImagePickerProps) {
               alt={incomingImageAlt}
               width={incomingImage.width ?? 1600}
               height={incomingImage.height ?? 1200}
+              sizes="100vw"
               className="absolute inset-0 m-auto h-full w-auto max-w-full object-contain opacity-0 pointer-events-none"
-              priority
+              unoptimized
               onLoad={() => {
                 setSelectedImage(incomingImage);
                 setSelectedIndex(incomingIndex ?? selectedIndex);

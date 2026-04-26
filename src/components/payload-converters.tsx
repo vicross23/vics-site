@@ -57,7 +57,13 @@ export const converters: JSXConvertersFunction = ({ defaultConverters }) => ({
     return (
       <div className="mx-auto w-full max-w-md">
         <AspectRatio ratio={4 / 5}>
-          <Image src={upload.url} alt={alt} fill className="object-cover" />
+          <Image
+            src={upload.url}
+            alt={alt}
+            fill
+            sizes="(min-width: 768px) 28rem, 100vw"
+            className="object-cover"
+          />
         </AspectRatio>
       </div>
     );

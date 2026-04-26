@@ -51,7 +51,14 @@ const ImageCarousel = ({
           {images.map((image, index) => (
             <CarouselItem key={index} className="min-w-full min-h-full">
               <div className="min-h-full relative">
-                <Image alt="Image carousel image" src={image.imageUrl} fill />
+                <Image
+                  alt="Image carousel image"
+                  src={image.imageUrl}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                  unoptimized
+                />
               </div>
             </CarouselItem>
           ))}

@@ -23,6 +23,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                 src={coverImage.url}
                 alt={coverImage.title || project.name}
                 fill
+                sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
               />
             ) : (
