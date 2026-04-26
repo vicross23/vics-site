@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { Suspense } from "react";
 import Footer from "~/components/footer/footer";
 import NavigationBar from "~/components/navigation/navigation-bar";
 import QueryProvider from "~/components/providers/query-provider";
@@ -30,7 +31,9 @@ export default function RootLayout({
       <body className={`${geistSans.className} antialiased}`}>
         <QueryProvider>
           <main className="flex flex-col min-h-screen w-full">
-            <NavigationBar />
+            <Suspense fallback={null}>
+              <NavigationBar />
+            </Suspense>
             {children}
           </main>
           <Toaster richColors />

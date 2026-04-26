@@ -1,4 +1,5 @@
 import { format, parseISO } from "date-fns";
+import { cacheLife, cacheTag } from "next/cache";
 import ProjectMasonryGallery from "~/components/projects/project-masonry-gallery";
 import { getPayload } from "~/lib/payload";
 import { Media } from "~/payload-types";
@@ -9,16 +10,24 @@ type ProjectPageProps = {
   }>;
 };
 
-export default async function ProjectPage({ params }: ProjectPageProps) {
-  const { projectId } = await params;
+async function getProject(projectId: string) {
+  "use cache";
+  cacheTag(`projectPage:${projectId}`);
+  cacheLife("hours");
+
   const payload = await getPayload();
 
-  const project = await payload.findByID({
+  return payload.findByID({
     disableErrors: true,
     collection: "projects",
     id: projectId,
     depth: 2,
   });
+}
+
+export default async function ProjectPage({ params }: ProjectPageProps) {
+  const { projectId } = await params;
+  const project = await getProject(projectId);
 
   if (!project) {
     return (

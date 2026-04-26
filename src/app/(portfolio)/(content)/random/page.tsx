@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { cacheLife, cacheTag } from "next/cache";
 import RandomImagePicker from "~/components/random/random-image-picker";
 import { getPayload } from "~/lib/payload";
 import { Media } from "~/payload-types";
@@ -12,6 +13,10 @@ function isImageMedia(doc: Media) {
 }
 
 export default async function RandomPage() {
+  "use cache";
+  cacheTag("randomPage");
+  cacheLife("hours");
+
   const payload = await getPayload();
 
   const media = await payload.find({
