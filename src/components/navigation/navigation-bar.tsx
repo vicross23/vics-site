@@ -23,9 +23,9 @@ const NavigationBar = () => {
   const pathname = usePathname();
 
   const navigationItems = [
-    { text: "people", href: "/people" },
-    { text: "places", href: "/places" },
-    { text: "things", href: "/things" },
+    { text: "projects", href: "/projects" },
+    { text: "personal", href: "/personal" },
+    { text: "random", href: "/random" },
     { text: "cv", href: "/cv" },
     { text: "about me", href: "/about" },
   ];
@@ -46,7 +46,7 @@ const NavigationBar = () => {
             key={`navigation-item-${item.text}`}
             text={item.text}
             href={item.href}
-            isActive={pathname === item.href}
+            isActive={!!pathname.includes(item.href)}
           />
         ))}
       </div>
@@ -61,7 +61,7 @@ const NavigationBar = () => {
               key={`navigation-item-${item.text}`}
               text={item.text}
               href={item.href}
-              isActive={pathname === item.href}
+              isActive={!!pathname.includes(item.href)}
             />
           ))}
         </SheetContent>
