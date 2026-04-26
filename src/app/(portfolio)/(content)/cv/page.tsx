@@ -1,12 +1,17 @@
 import { Metadata } from "next";
 import { getPayload } from "~/lib/payload";
 import { format } from "date-fns";
+import { cacheTag, cacheLife } from "next/cache";
 
 export const metadata: Metadata = {
   title: "CV",
 };
 
 export default async function CV() {
+  "use cache";
+  cacheTag("cvPage");
+  cacheLife("hours");
+
   const payload = await getPayload();
 
   const experienceTypes = await payload.find({
@@ -55,7 +60,7 @@ export default async function CV() {
               return (
                 <p key={`experience-${experience.id}`}>{`${format(
                   experience?.startDate,
-                  "yyyy"
+                  "yyyy",
                 )}${
                   experience?.endDate
                     ? ` - ${format(experience?.endDate, "yyyy")}`

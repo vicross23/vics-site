@@ -1,12 +1,14 @@
-export const dynamic = "force-dynamic";
-
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import { cacheLife, cacheTag } from "next/cache";
 import ImageCarousel from "~/components/images/image-carousel";
 import { converters } from "~/components/payload-converters";
 import { getPayload } from "~/lib/payload";
 import { getImages } from "~/server/db/queries";
 
 export default async function Home() {
+  "use cache";
+  cacheTag("homePage");
+  cacheLife("hours");
   const payload = await getPayload();
 
   const content = await payload.find({

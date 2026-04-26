@@ -1,6 +1,5 @@
-export const dynamic = "force-dynamic";
-
 import { Metadata } from "next";
+import { cacheLife, cacheTag } from "next/cache";
 import { ProjectPageType } from "~/app/models";
 import ProjectCardLayout from "~/components/projects/project-card-layout";
 import { getPayload } from "~/lib/payload";
@@ -10,6 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default async function Projects() {
+  "use cache";
+  cacheTag("projectsPage");
+  cacheLife("hours");
+
   const payload = await getPayload();
 
   const content = await payload.find({

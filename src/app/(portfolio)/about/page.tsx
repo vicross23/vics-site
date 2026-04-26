@@ -1,5 +1,6 @@
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import { Metadata } from "next";
+import { cacheLife, cacheTag } from "next/cache";
 import { converters } from "~/components/payload-converters";
 import { getPayload } from "~/lib/payload";
 
@@ -8,6 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default async function About() {
+  "use cache";
+  cacheTag("aboutPage");
+  cacheLife("hours");
+
   const payload = await getPayload();
 
   const content = await payload.find({

@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import { format, parseISO } from "date-fns";
 import ProjectMasonryGallery from "~/components/projects/project-masonry-gallery";
 import { getPayload } from "~/lib/payload";
@@ -33,7 +31,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const images =
     project.images?.filter(
       (image): image is Media =>
-        typeof image === "object" && image !== null && Boolean(image.url)
+        typeof image === "object" && image !== null && Boolean(image.url),
     ) ?? [];
 
   return (

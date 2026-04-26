@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import { Metadata } from "next";
 import RandomImagePicker from "~/components/random/random-image-picker";
 import { getPayload } from "~/lib/payload";
