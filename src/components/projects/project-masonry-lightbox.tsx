@@ -1,6 +1,8 @@
 "use client";
 
 import { XIcon } from "lucide-react";
+import { useState } from "react";
+import { Skeleton } from "~/components/ui/skeleton";
 import { cn } from "~/lib/utils";
 import { Media } from "~/payload-types";
 import {
@@ -23,22 +25,36 @@ export default function ProjectMasonryLightbox({
   image,
   projectName,
 }: ProjectMasonryLightboxProps) {
+  const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
+
   if (!image.url) {
     return null;
   }
 
   const alt = image.title || `${projectName} image`;
+  const aspectRatio =
+    image.width && image.height ? `${image.width} / ${image.height}` : "4 / 3";
 
   return (
     <MorphingDialog>
       <MorphingDialogTrigger
         className="block w-full overflow-hidden focus:outline-hidden"
         aria-label={`Open ${alt}`}
+        aria-busy={!thumbnailLoaded}
+        style={{ aspectRatio }}
       >
+        {!thumbnailLoaded ? (
+          <Skeleton className="absolute inset-0 h-full w-full rounded-none" />
+        ) : null}
         <MorphingDialogImage
           src={image.url}
           alt={alt}
-          className="h-auto w-full cursor-zoom-in"
+          className={cn(
+            "block h-auto w-full cursor-zoom-in transition-opacity",
+            thumbnailLoaded ? "opacity-100" : "opacity-0"
+          )}
+          loading="lazy"
+          onLoad={() => setThumbnailLoaded(true)}
         />
       </MorphingDialogTrigger>
       <MorphingDialogContainer>

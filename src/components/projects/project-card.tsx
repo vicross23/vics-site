@@ -1,7 +1,11 @@
+"use client";
+
 import { format, parseISO } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
+import { Skeleton } from "~/components/ui/skeleton";
 import { Media, Project } from "~/payload-types";
 
 function isMediaUpload(value: Project["coverImage"]): value is Media {
@@ -9,6 +13,7 @@ function isMediaUpload(value: Project["coverImage"]): value is Media {
 }
 
 export default function ProjectCard({ project }: { project: Project }) {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const coverImage = isMediaUpload(project.coverImage)
     ? project.coverImage
     : null;
@@ -17,15 +22,26 @@ export default function ProjectCard({ project }: { project: Project }) {
     <Link href={`/projects/${project.id}`}>
       <div className="w-full">
         <AspectRatio ratio={4 / 3}>
-          <div className="group relative h-full w-full overflow-hidden">
+          <div
+            className="group relative h-full w-full overflow-hidden"
+            aria-busy={coverImage?.url ? !imageLoaded : undefined}
+          >
             {coverImage?.url ? (
-              <Image
-                src={coverImage.url}
-                alt={coverImage.title || project.name}
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-              />
+              <>
+                {!imageLoaded ? (
+                  <Skeleton className="absolute inset-0 h-full w-full rounded-none" />
+                ) : null}
+                <Image
+                  src={coverImage.url}
+                  alt={coverImage.title || project.name}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className={`object-cover transition-[opacity,transform] duration-300 group-hover:scale-[1.02] ${
+                    imageLoaded ? "opacity-100" : "opacity-0"
+                  }`}
+                  onLoad={() => setImageLoaded(true)}
+                />
+              </>
             ) : (
               <div className="h-full w-full bg-black/10" />
             )}

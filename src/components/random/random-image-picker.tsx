@@ -63,9 +63,10 @@ export default function RandomImagePicker({ images }: RandomImagePickerProps) {
         <div
           className="relative flex w-full items-center justify-center"
           style={{ height: IMAGE_HEIGHT }}
+          aria-busy={imageLoading}
         >
-          {imageLoading && !selectedImage?.url ? (
-            <Skeleton className="absolute inset-0 mx-auto h-full w-full max-w-full rounded-none" />
+          {imageLoading ? (
+            <Skeleton className="absolute inset-0 z-10 mx-auto h-full w-full max-w-full rounded-none" />
           ) : null}
           {selectedImage?.url ? (
             <Image
@@ -76,7 +77,7 @@ export default function RandomImagePicker({ images }: RandomImagePickerProps) {
               height={selectedImage.height ?? 1200}
               sizes="100vw"
               className={`h-full w-auto max-w-full object-contain transition-opacity ${
-                imageLoading && !incomingImage ? "opacity-0" : "opacity-100"
+                imageLoading ? "opacity-0" : "opacity-100"
               }`}
               onLoad={() => {
                 if (!incomingImage) {

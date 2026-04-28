@@ -2,7 +2,7 @@
 
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
-import { use } from "react";
+import { use, useState } from "react";
 import useBreakpoint from "use-breakpoint";
 import { CAROUSEL_BREAKPOINTS } from "~/components/constants";
 
@@ -11,22 +11,48 @@ import {
   CarouselContent,
   CarouselItem,
 } from "~/components/ui/carousel";
+import { Skeleton } from "~/components/ui/skeleton";
+
+type CarouselImage = {
+  title: string | null;
+  isSmall: boolean | null;
+  id: string;
+  date: string;
+  location: string;
+  page: string;
+  imageUrl: string;
+  createdAt: string;
+};
+
+function ImageCarouselItem({ image }: { image: CarouselImage }) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  return (
+    <div
+      className="relative min-h-[calc(100vh-84px)] overflow-hidden md:min-h-[calc(100vh-108px)]"
+      aria-busy={!imageLoaded}
+    >
+      {!imageLoaded ? (
+        <Skeleton className="absolute inset-0 h-full w-full rounded-none" />
+      ) : null}
+      <Image
+        alt={image.title || "Image carousel image"}
+        src={image.imageUrl}
+        fill
+        sizes="100vw"
+        className={`object-cover transition-opacity ${
+          imageLoaded ? "opacity-100" : "opacity-0"
+        }`}
+        onLoad={() => setImageLoaded(true)}
+      />
+    </div>
+  );
+}
 
 const ImageCarousel = ({
   imagesPromise,
 }: {
-  imagesPromise: Promise<
-    {
-      title: string | null;
-      isSmall: boolean | null;
-      id: string;
-      date: string;
-      location: string;
-      page: string;
-      imageUrl: string;
-      createdAt: string;
-    }[]
-  >;
+  imagesPromise: Promise<CarouselImage[]>;
 }) => {
   const { breakpoint } = useBreakpoint(CAROUSEL_BREAKPOINTS, "large");
 
@@ -48,20 +74,12 @@ const ImageCarousel = ({
         ]}
       >
         <CarouselContent className="ml-0 justify-start min-h-[calc(100vh-84px)] md:min-h-[calc(100vh-108px)]">
-          {images.map((image, index) => (
+          {images.map((image) => (
             <CarouselItem
-              key={index}
+              key={image.id}
               className="min-w-full min-h-[calc(100vh-84px)] pl-0 md:min-h-[calc(100vh-108px)]"
             >
-              <div className="relative min-h-[calc(100vh-84px)] overflow-hidden md:min-h-[calc(100vh-108px)]">
-                <Image
-                  alt="Image carousel image"
-                  src={image.imageUrl}
-                  fill
-                  sizes="100vw"
-                  className="object-cover"
-                />
-              </div>
+              <ImageCarouselItem image={image} />
             </CarouselItem>
           ))}
         </CarouselContent>
