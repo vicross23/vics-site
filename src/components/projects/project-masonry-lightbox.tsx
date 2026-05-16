@@ -1,7 +1,7 @@
 "use client";
 
 import { XIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Skeleton } from "~/components/ui/skeleton";
 import { cn } from "~/lib/utils";
 import { Media } from "~/payload-types";
@@ -27,6 +27,36 @@ export default function ProjectMasonryLightbox({
 }: ProjectMasonryLightboxProps) {
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
 
+  useEffect(() => {
+    if (!image.url) {
+      return;
+    }
+
+    setThumbnailLoaded(false);
+
+    let cancelled = false;
+    const thumbnail = new Image();
+    const markLoaded = () => {
+      if (!cancelled) {
+        setThumbnailLoaded(true);
+      }
+    };
+
+    thumbnail.onload = markLoaded;
+    thumbnail.onerror = markLoaded;
+    thumbnail.src = image.url;
+
+    if (thumbnail.complete) {
+      markLoaded();
+    }
+
+    return () => {
+      cancelled = true;
+      thumbnail.onload = null;
+      thumbnail.onerror = null;
+    };
+  }, [image.url]);
+
   if (!image.url) {
     return null;
   }
@@ -38,7 +68,7 @@ export default function ProjectMasonryLightbox({
   return (
     <MorphingDialog>
       <MorphingDialogTrigger
-        className="block w-full overflow-hidden focus:outline-hidden"
+        className="relative block w-full overflow-hidden focus:outline-hidden"
         aria-label={`Open ${alt}`}
         aria-busy={!thumbnailLoaded}
         style={{ aspectRatio }}
@@ -66,7 +96,7 @@ export default function ProjectMasonryLightbox({
         >
           <MorphingDialogTitle className="sr-only">{alt}</MorphingDialogTitle>
           <div className="relative flex max-h-[75vh] max-w-fit items-center justify-center">
-            <MorphingDialogClose className="absolute top-0 -right-7 z-10 flex size-5 items-center justify-center rounded-full bg-white text-black shadow-lg transition-opacity hover:opacity-85 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black focus:outline-hidden cursor-pointer">
+            <MorphingDialogClose className="absolute top-2 right-2 z-10 flex size-5 cursor-pointer items-center justify-center rounded-full bg-white text-black shadow-lg transition-opacity hover:opacity-85 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black focus:outline-hidden md:top-0 md:-right-7">
               <XIcon className="size-4" />
               <span className="sr-only">Close</span>
             </MorphingDialogClose>
