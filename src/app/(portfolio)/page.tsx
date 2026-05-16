@@ -7,7 +7,7 @@ import { getImages } from "~/server/db/queries";
 
 export default async function Home() {
   "use cache";
-  cacheTag("homePage");
+  cacheTag("homePage", "content");
   cacheLife("hours");
   const payload = await getPayload();
 

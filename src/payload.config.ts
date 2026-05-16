@@ -12,6 +12,7 @@ import { ExperienceType } from '~/collections/ExperienceType'
 import { Experience } from '~/collections/Experience'
 import { Content } from '~/collections/Content'
 import { Project } from '~/collections/Project'
+import { Settings } from '~/collections/Settings'
 
 
 const filename = fileURLToPath(import.meta.url)
@@ -25,7 +26,15 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Project, Experience, ExperienceType, Content],
+  collections: [
+    Users,
+    Media,
+    Project,
+    Experience,
+    ExperienceType,
+    Content,
+    Settings,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

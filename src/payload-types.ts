@@ -73,6 +73,7 @@ export interface Config {
     experience: Experience;
     'experience-type': ExperienceType;
     content: Content;
+    settings: Setting;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +91,7 @@ export interface Config {
     experience: ExperienceSelect<false> | ExperienceSelect<true>;
     'experience-type': ExperienceTypeSelect<false> | ExperienceTypeSelect<true>;
     content: ContentSelect<false> | ContentSelect<true>;
+    settings: SettingsSelect<false> | SettingsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -249,6 +251,17 @@ export interface Content {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: string;
+  page: 'projects' | 'personal';
+  projectSortOrder: 'date-desc' | 'date-asc' | 'name-asc' | 'name-desc';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -294,6 +307,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'content';
         value: string | Content;
+      } | null)
+    | ({
+        relationTo: 'settings';
+        value: string | Setting;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -426,6 +443,16 @@ export interface ExperienceTypeSelect<T extends boolean = true> {
 export interface ContentSelect<T extends boolean = true> {
   key?: T;
   content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings_select".
+ */
+export interface SettingsSelect<T extends boolean = true> {
+  page?: T;
+  projectSortOrder?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function About() {
   "use cache";
-  cacheTag("aboutPage");
+  cacheTag("aboutPage", "content");
   cacheLife("hours");
 
   const payload = await getPayload();

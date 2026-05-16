@@ -4,6 +4,7 @@ import { format, parseISO } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { ProjectPageType } from "~/app/models";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { Skeleton } from "~/components/ui/skeleton";
 import { Media, Project } from "~/payload-types";
@@ -17,14 +18,14 @@ export default function ProjectCard({
   sourcePage,
 }: {
   project: Project;
-  sourcePage?: "personal" | "projects";
+  sourcePage?: ProjectPageType;
 }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const coverImage = isMediaUpload(project.coverImage)
     ? project.coverImage
     : null;
   const projectHref =
-    sourcePage === "personal"
+    sourcePage === ProjectPageType.Personal
       ? `/projects/${project.id}?from=personal`
       : `/projects/${project.id}`;
 
