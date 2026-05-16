@@ -36,7 +36,7 @@ export default function ProjectCard({ project }: { project: Project }) {
                   alt={coverImage.title || project.name}
                   fill
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  className={`object-cover transition-[opacity,transform] duration-300 group-hover:scale-[1.02] ${
+                  className={`object-cover transform-gpu transition-transform duration-300 ease-out group-hover:scale-[1.02] ${
                     imageLoaded ? "opacity-100" : "opacity-0"
                   }`}
                   onLoad={() => setImageLoaded(true)}
@@ -46,8 +46,8 @@ export default function ProjectCard({ project }: { project: Project }) {
               <div className="h-full w-full bg-black/10" />
             )}
 
-            <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/50">
-              <p className="px-4 text-center text-lg font-extralight text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:bg-black/50">
+              <p className="px-4 text-center text-lg font-extralight text-white opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100">
                 {`${project.name} // ${format(parseISO(project.date), "yyyy")}`}
               </p>
             </div>

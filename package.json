@@ -11,6 +11,9 @@
     "postinstall": "prisma generate",
     "db:generate": "prisma generate"
   },
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
     "@icons-pack/react-simple-icons": "^12.7.0",
