@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 import { Mrs_Sheppards } from "next/font/google";
 
@@ -21,7 +21,7 @@ const mrsSheppards = Mrs_Sheppards({
 
 const NavigationBar = () => {
   const pathname = usePathname();
-
+  const searchParams = useSearchParams();
   const navigationItems = [
     { text: "projects", href: "/projects" },
     { text: "personal", href: "/personal" },
@@ -29,6 +29,10 @@ const NavigationBar = () => {
     { text: "cv", href: "/cv" },
     { text: "about me", href: "/about" },
   ];
+  const activeHref =
+    pathname.startsWith("/projects") && searchParams.get("from") === "personal"
+      ? "/personal"
+      : navigationItems.find((item) => pathname.startsWith(item.href))?.href;
 
   return (
     <div className="sticky top-0 z-40 left-0 w-screen h-15 px-4 gap-4 flex items-center justify-between bg-background">
@@ -46,7 +50,7 @@ const NavigationBar = () => {
             key={`navigation-item-${item.text}`}
             text={item.text}
             href={item.href}
-            isActive={!!pathname.includes(item.href)}
+            isActive={activeHref === item.href}
           />
         ))}
       </div>
@@ -61,7 +65,7 @@ const NavigationBar = () => {
               key={`navigation-item-${item.text}`}
               text={item.text}
               href={item.href}
-              isActive={!!pathname.includes(item.href)}
+              isActive={activeHref === item.href}
             />
           ))}
         </SheetContent>

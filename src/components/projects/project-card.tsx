@@ -12,14 +12,24 @@ function isMediaUpload(value: Project["coverImage"]): value is Media {
   return typeof value === "object" && value !== null && "url" in value;
 }
 
-export default function ProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({
+  project,
+  sourcePage,
+}: {
+  project: Project;
+  sourcePage?: "personal" | "projects";
+}) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const coverImage = isMediaUpload(project.coverImage)
     ? project.coverImage
     : null;
+  const projectHref =
+    sourcePage === "personal"
+      ? `/projects/${project.id}?from=personal`
+      : `/projects/${project.id}`;
 
   return (
-    <Link href={`/projects/${project.id}`}>
+    <Link href={projectHref}>
       <div className="w-full">
         <AspectRatio ratio={4 / 3}>
           <div

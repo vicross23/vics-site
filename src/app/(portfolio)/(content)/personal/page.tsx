@@ -26,7 +26,7 @@ export default async function PersonalPage() {
   const projects = content.docs;
   return (
     <div className="grow p-10 flex flex-col gap-8">
-      <ProjectCardLayout projects={projects} />
+      <ProjectCardLayout projects={projects} sourcePage="personal" />
     </div>
   );
 }
