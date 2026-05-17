@@ -145,12 +145,14 @@ export type MorphingDialogContentProps = {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  onCloseStart?: () => void;
 };
 
 function MorphingDialogContent({
   children,
   className,
   style,
+  onCloseStart,
 }: MorphingDialogContentProps) {
   const { setIsOpen, isOpen, uniqueId, triggerRef } = useMorphingDialog();
   const containerRef = useRef<HTMLDivElement>(null!);
@@ -162,6 +164,7 @@ function MorphingDialogContent({
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        onCloseStart?.();
         setIsOpen(false);
       }
       if (event.key === "Tab") {
@@ -186,7 +189,7 @@ function MorphingDialogContent({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [setIsOpen, firstFocusableElement, lastFocusableElement]);
+  }, [setIsOpen, firstFocusableElement, lastFocusableElement, onCloseStart]);
 
   useEffect(() => {
     if (isOpen) {
@@ -209,6 +212,7 @@ function MorphingDialogContent({
 
   useClickOutside(containerRef, () => {
     if (isOpen) {
+      onCloseStart?.();
       setIsOpen(false);
     }
   });
@@ -245,8 +249,17 @@ function MorphingDialogContainer({
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
+    let cancelled = false;
+
+    queueMicrotask(() => {
+      if (!cancelled) {
+        setMounted(true);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   if (!mounted) return null;
@@ -257,14 +270,14 @@ function MorphingDialogContainer({
         <>
           <motion.div
             key={`backdrop-${uniqueId}`}
-            className="fixed inset-0 z-[100] h-full w-full bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-100 h-full w-full bg-black/80 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           />
           <div
             className={cn(
-              "fixed inset-0 z-[101] flex items-center justify-center",
+              "fixed inset-0 z-101 flex items-center justify-center",
               className
             )}
             style={style}
@@ -402,6 +415,7 @@ function MorphingDialogImage({
 export type MorphingDialogCloseProps = {
   children?: React.ReactNode;
   className?: string;
+  onCloseStart?: () => void;
   variants?: {
     initial: Variant;
     animate: Variant;
@@ -412,13 +426,15 @@ export type MorphingDialogCloseProps = {
 function MorphingDialogClose({
   children,
   className,
+  onCloseStart,
   variants,
 }: MorphingDialogCloseProps) {
   const { setIsOpen, uniqueId } = useMorphingDialog();
 
   const handleClose = useCallback(() => {
+    onCloseStart?.();
     setIsOpen(false);
-  }, [setIsOpen]);
+  }, [setIsOpen, onCloseStart]);
 
   return (
     <motion.button
